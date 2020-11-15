@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faddi.KaryawanBO.dto.EmployeeAllDto;
 import com.faddi.KaryawanBO.dto.EmployeeDto;
 import com.faddi.KaryawanBO.service.dao.EmployeeDao;
 import com.faddi.KaryawanBO.service.dao.PositionDao;
@@ -28,11 +29,16 @@ public class Controller {
 	@Autowired
 	EmployeeDao employeeDao;
 	
-	@RequestMapping("/karyawanindex")
+	@RequestMapping(value="/karyawanindex", method=RequestMethod.POST)
 	@ResponseBody
-	private List<EmployeeJoin> karyawanindex() {
-		List<EmployeeJoin> e = employeeDao.getListForPagination(0, 5);
-		return e;
+	private EmployeeAllDto karyawanindex(@RequestBody EmployeeAllDto employeeAllDto) {
+		List<EmployeeJoin> e = employeeDao.getListForPagination(employeeAllDto.getPage(), 5);
+		Number count = employeeDao.countAll();
+		EmployeeAllDto ea = new EmployeeAllDto();
+		ea.setEmployeeDto(e);
+		ea.setCount(count);
+		ea.setPage(employeeAllDto.getPage());
+		return ea;
 	}
 	
 	@RequestMapping("/position")
@@ -42,7 +48,7 @@ public class Controller {
 		return list;
 	}
 	
-	@RequestMapping("/employee/{id}")
+	@RequestMapping(value="/employee/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	private EmployeeJoin employee(@PathVariable("id") int id) {
 		EmployeeJoin e = employeeDao.getById(id);

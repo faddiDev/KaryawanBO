@@ -14,4 +14,6 @@ public interface EmployeeDao {
 	public Employee update(EmployeeDto employee);
 	public Employee delete(EmployeeDto employee);
 	
+	public Number countAll();
+	
 }

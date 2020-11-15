@@ -1,10 +1,12 @@
 package com.faddi.KaryawanBO.service.dao.impl;
 
 import java.util.Date;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.el.parser.ParseException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.faddi.KaryawanBO.dto.EmployeeDto;
@@ -15,6 +17,15 @@ import com.faddi.KaryawanBO.service.model.EmployeeJoin;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
+	public Number countAll() {
+		Session session = HibernateUtils.session().getCurrentSession();
+    	session.beginTransaction();
+    	Query query = session.createSQLQuery("SELECT COUNT(*) FROM t2_employee e WHERE e.IS_DELETE=0");
+    	Number result = (Number) query.list().get(0);
+    	session.getTransaction().commit();
+    	return result;
+	}
+	
 	public List<EmployeeJoin> getListForPagination(int page, int limit) {
 		Session session = HibernateUtils.session().getCurrentSession();
     	session.beginTransaction();
