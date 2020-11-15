@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.faddi.KaryawanBO.service.model">
+	<class name="Employee" table="t2_employee">
+		<id name="id" column="ID" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="name" column="NAME" type="string" />
+		<property name="birthDate" column="BIRTH_DATE" type="date" />
+		<property name="positionId" column="POSITION_ID" type="int" />
+		<property name="idNumber" column="ID_NUMBER" type="int" />
+		<property name="gender" column="GENDER" type="int" />
+		<property name="isDelete" column="IS_DELETE" type="int" />
+		
+	</class>	
+</hibernate-mapping>
